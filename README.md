@@ -35,7 +35,7 @@ The can **only** be changed by the server and they update in real time. You will
 
  - Display the weather with toggleable ConVars - Stretch goal is to have Just Text/Icons/Icons and Text
  - Display the temperature with toggleable ConVars - Stretch goal is to have Just Text/Icons/Icons and Text
- - ~~Add missing StormFox features to the ULX Module (Weather Change, Temp change, etc)
+ - ~~Add missing StormFox features to the ULX Module (Weather Change, Temp change, etc)~~
  - Garry's Mod Workshop Release
  - Format all variables under the clock so that it formats itself when something is disabled.
  - Allow server admins to set the position of the hud via ConVars (Workshop release only - If they don't want to modify the code themselves)
