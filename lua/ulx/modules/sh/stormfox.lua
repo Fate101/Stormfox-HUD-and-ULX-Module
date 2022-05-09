@@ -1,8 +1,6 @@
 local CATEGORY_NAME = "StormFox"
 
-
 ulx.weather_names = {}
-
 function StormFoxVersion()
 
 	if StormFox2 and StormFox2.Weather then
@@ -29,7 +27,6 @@ function StormFoxVersion()
 		}
 	else return	end
 end
-
 StormFoxVersion()
 
 function ulx.settime(calling_ply, time)
