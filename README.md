@@ -1,7 +1,7 @@
 # StormFox 1/2 HUD & ULX Module
 This is for Garry's Mod and the StormFox 1/2 Addon. This adds a simple clock to your hud reflecting the StormFox time.
 
-Includes ULX & SAM Modules to be able to change the time via said Systems
+Includes ULX Module to control StormFox - See below for Features
 
 ![Current version of clock with server name enabled](https://i.imgur.com/BxslrHr.png)
 
