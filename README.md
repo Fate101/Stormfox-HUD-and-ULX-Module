@@ -1,20 +1,21 @@
-# StormFox 1 & 2 Hud & ULX/SAM Module
+# StormFox 1/2 HUD & ULX Module
 This is for Garry's Mod and the StormFox 1/2 Addon. This adds a simple clock to your hud reflecting the StormFox time.
 
-Includes ULX & SAM Modules to be able to change the time via said Systems
+Includes ULX Module to control StormFox - See below for Features
 
 ![Current version of clock with server name enabled](https://i.imgur.com/BxslrHr.png)
 
 ## Requirements
 - Garry's Mod Server
 - StormFox 1/2 Installed on Server
+- ULX & ULib for the Module
 - Access to the server addons folder (Ignore if it's workshop release)
 
 ## Installation
 
 Simply install the folder to garrysmod/addons. Ensure the folder is lowercase as it may cause issues on Linux based servers.
 
-If you want just the ULX/SAM Module delete the **autorun**. 
+If you want just the ULX Module delete the **autorun** folder. 
 
 ## ConVars
 `StormFoxHudServerNameEnabled 1`
@@ -28,14 +29,13 @@ The can **only** be changed by the server and they update in real time. You will
 ## Current Features
 - Displays the time from StormFox 1/2
 - Displays Server Name set via ConVars which can be disabled
-- ULX Module - Currently only allows you to set time
-- SAM Module - Currently only allows you to set time
+- ULX Module - Set Time, Set Weather and Strength, Set Temp & Set Wind Speed
 
 ## Upcoming Features
 
  - Display the weather with toggleable ConVars - Stretch goal is to have Just Text/Icons/Icons and Text
  - Display the temperature with toggleable ConVars - Stretch goal is to have Just Text/Icons/Icons and Text
- - Add missing StormFox features to the ULX/SAM Module (Weather Change, Temp change, etc)
+ - ~~Add missing StormFox features to the ULX Module (Weather Change, Temp change, etc)~~
  - Garry's Mod Workshop Release
  - Format all variables under the clock so that it formats itself when something is disabled.
  - Allow server admins to set the position of the hud via ConVars (Workshop release only - If they don't want to modify the code themselves)
