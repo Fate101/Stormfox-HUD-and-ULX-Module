@@ -24,5 +24,9 @@ The can **only** be changed by the server and they update in real time. You will
  - Format all variables under clock such as Server Name/Weather/Temp to allow users to choose which order these are in as well as enable/disable them.
  - Allow server admins to set the position of the hud via ConVars (Workshop release only - If they don't want to modify the code themselves)
 
+## Usage
+
+Feel free to use and modify at will for your own servers. No need to credit us or anything but always appreciated if you do.
+
 ## Contact
 Any issues contact me on Discord  - Fate#2191 or join https://discord.gg/SoulNetworks
