@@ -9,7 +9,9 @@ if CLIENT then
     surface.CreateFont( "StormFoxTime75" , { font = "Trebuchet24", size = 75, weight = 500 })
     surface.CreateFont( "StormFoxTime35" , { font = "Trebuchet24", size = 35, weight = 100 })
       
-    hook.Add( "HUDPaint", "StormFoxTime", function()
+    
+    
+    local function ShowStormFoxHUD()
         local time = nil
 
         if StormFox2 then
@@ -23,6 +25,18 @@ if CLIENT then
 
         if GetConVar("StormFoxHudServerNameEnabled"):GetInt() == 1 then
             draw.SimpleTextOutlined( GetConVar("StormFoxHudServerName"):GetString() , "StormFoxTime35", 50 + 5, 50 + y/2 + 15, color_white, 0, 0, .5, color_black )
-        end
-    end)
+        end       
+        
+    end
+    hook.Add("HUDPaint","EnableStormFoxHUDPaint",ShowStormFoxHUD) 
+
+    local function SShowStormFoxHUD()
+        hook.Add("HUDPaint","EnableStormFoxHUDPaint",ShowStormFoxHUD) 
+    end
+    hook.Add("ScoreboardHide", "Scoreboard_Close",SShowStormFoxHUD)
+
+    local function HideStormFoxHUD()
+        hook.Remove("HUDPaint","EnableStormFoxHUDPaint")
+    end
+    hook.Add("ScoreboardShow", "Scoreboard_Open", HideStormFoxHUD)
 end
