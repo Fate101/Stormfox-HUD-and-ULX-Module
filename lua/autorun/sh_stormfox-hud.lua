@@ -28,13 +28,16 @@ if CLIENT then
     end
     hook.Add("HUDPaint","EnableStormFoxHUDPaint",ShowStormFoxHUD) 
 
-    local function SShowStormFoxHUD()
-        hook.Add("HUDPaint","EnableStormFoxHUDPaint",ShowStormFoxHUD) 
-    end
-    hook.Add("ScoreboardHide", "Scoreboard_Close",SShowStormFoxHUD)
-
-    local function HideStormFoxHUD()
-        hook.Remove("HUDPaint","EnableStormFoxHUDPaint")
-    end
-    hook.Add("ScoreboardShow", "Scoreboard_Open", HideStormFoxHUD)
+    //When key is being used
+    hook.Add( "KeyPress", "OpenedScoreboard", function( ply, key )
+        if ( key == IN_SCORE ) then
+            hook.Remove("HUDPaint","EnableStormFoxHUDPaint")
+        end
+    end )
+    // When key is released
+    hook.Add( "KeyRelease", "ReleaseScoreboard", function( ply, key )
+        if ( key == IN_SCORE ) then
+            hook.Add("HUDPaint","EnableStormFoxHUDPaint",ShowStormFoxHUD) 
+        end
+    end )
 end
