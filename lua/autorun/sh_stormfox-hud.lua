@@ -33,17 +33,17 @@ if CLIENT then
 
         if GetConVar("StormFoxHudWeatherEnabled"):GetInt() == 1 then
             if StormFox2 then
-                info = info .. "Weather: " .. StormFox2.Weather.GetCurrent().Name .. "\n"
+                info = info .. "Weather: " .. StormFox2.Weather.GetDescription() .. "\n"
             elseif StormFox then
-                info = info .. "Weather: " .. StormFox.GetWeatherID() .. "\n"
+                info = info .. "Weather: " .. StormFox.GetWeather() .. "\n"
             end
         end
 
         if GetConVar("StormFoxHudTempEnabled"):GetInt() == 1 then
             if StormFox2 then
-                info = info .. "Temp: " .. StormFox2.Temperature.Get() .. "°C \n"
+                info = info .. "Temp: " .. math.Round(StormFox2.Temperature.Get()) .. "°C \n"
             elseif StormFox then
-                info = info .. "Temp: " .. StormFox.GetTemperature() .. "°C \n"
+                info = info .. "Temp: " .. math.Round(StormFox.GetTemperature()) .. "°C \n"
             end
         end
 
