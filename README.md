@@ -3,7 +3,7 @@ This is for Garry's Mod and the StormFox 1/2 Addon. This adds a simple clock to 
 
 Includes ULX Module to control StormFox - See below for Features
 
-![Current version of clock with server name enabled](https://i.imgur.com/BxslrHr.png)
+![Current version of clock with server name enabled](https://i.imgur.com/o9neQNF.png)
 
 ## Requirements
 - Garry's Mod Server
@@ -24,6 +24,12 @@ Allows you to disable/enable the Server Name under the clock
 `StormFoxHudServerName "My Server Name"`
 Sets the Server Name to appear under the clock
 
+`StormFoxHudWeatherEnabled 1`
+Enables/Disables the weather being visible under the clock
+
+`StormFoxHudTempEnabled 1`
+Enables/Disables the temperature being visible under the clock (Celsius Only)
+
 The can **only** be changed by the server and they update in real time. You will need to put these into your **autoexec.cfg** or **server.cfg**
 
 ## Current Features
@@ -33,11 +39,11 @@ The can **only** be changed by the server and they update in real time. You will
 
 ## Upcoming Features
 
- - Display the weather with toggleable ConVars - Stretch goal is to have Just Text/Icons/Icons and Text
- - Display the temperature with toggleable ConVars - Stretch goal is to have Just Text/Icons/Icons and Text
+ - ~~Display the weather with toggleable ConVars - Stretch goal is to have Just Text/Icons/Icons and Text~~
+ - ~~Display the temperature with toggleable ConVars - Stretch goal is to have Just Text/Icons/Icons and Text~~
  - ~~Add missing StormFox features to the ULX Module (Weather Change, Temp change, etc)~~
  - ~~Garry's Mod Workshop Release~~
- - Format all variables under the clock so that it formats itself when something is disabled.
+ - ~~Format all variables under the clock so that it formats itself when something is disabled.~~
  - Allow server admins to set the position of the hud via ConVars (Workshop release only - If they don't want to modify the code themselves)
 
 ## Usage
