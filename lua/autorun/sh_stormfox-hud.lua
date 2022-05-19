@@ -47,7 +47,7 @@ if CLIENT then
             end
         end
 
-        if GetConVar("StormFoxHudTempEnabled"):GetInt() and GetConVar("StormFoxHudWeatherEnabled"):GetInt() and GetConVar("StormFoxHudServerNameEnabled"):GetInt() == 0 then
+        if info == "" then
             return 
         else
             draw.DrawText( info , "StormFoxTime40o", 50 + 5, 50 + y/2 + 15, color_white, TEXT_ALIGN_LEFT )
