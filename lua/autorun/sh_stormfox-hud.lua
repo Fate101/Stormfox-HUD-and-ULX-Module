@@ -10,6 +10,7 @@ if CLIENT then
     CreateConVar("StormFoxHudServerNameEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables Server Name text under Clock")
     CreateConVar("StormFoxHudWeatherEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables Weather text under Clock")
     CreateConVar("StormFoxHudTempEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables Temp text under Clock")
+    CreateClientConVar("StormFoxHudTempFEnabled",0,FCVAR_ARCHIVE, "Enables Fahrenheit Measurements for Temp")
     surface.CreateFont( "StormFoxTime75" , { font = "Trebuchet24", size = 75, weight = 500 })
     surface.CreateFont( "StormFoxTime40" , { font = "Trebuchet24", size = 40, weight = 100 })
     surface.CreateFont( "StormFoxTime40o" , { font = "Trebuchet24", size = 40, weight = 100, outline = true })
@@ -39,11 +40,25 @@ if CLIENT then
             end
         end
 
-        if GetConVar("StormFoxHudTempEnabled"):GetInt() == 1 then
+        if GetConVar("StormFoxHUDTempEnabled"):GetInt() == 1 then
             if StormFox2 then
-                info = info .. "Temp: " .. math.Round(StormFox2.Temperature.Get()) .. "°C \n"
+                local celsiusTemp = StormFox2.Temperature.Get()
+                local displayTemp = celsiusTemp
+                local tempUnit = "°C"
+                if GetConVar("StormFoxHUDTempFEnable"):GetInt() == 1 then
+                    displayTemp = (celsiusTemp * 1.8) + 32
+                    tempUnit = "°F"
+                end
+                info = info .. "Temp: " .. math.Round(displayTemp) .. tempUnit .. " \n"
             elseif StormFox then
-                info = info .. "Temp: " .. math.Round(StormFox.GetTemperature()) .. "°C \n"
+                local celsiusTemp = StormFox.GetTemperature()
+                local displayTemp = celsiusTemp
+                local tempUnit = "°C"
+                if GetConVar("StormFoxHUDTempFEnable"):GetInt() == 1 then
+                    displayTemp = (celsiusTemp * 1.8) + 32
+                    tempUnit = "°F"
+                end
+                info = info .. "Temp: " .. math.Round(displayTemp) .. tempUnit .. " \n"
             end
         end
 
