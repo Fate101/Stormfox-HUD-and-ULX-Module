@@ -1,16 +1,21 @@
 if SERVER then
-    CreateConVar("StormFoxHudServerName","My Server Name",FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Sets the Server Name text under Clock")
+    CreateConVar("StormFoxHudServerName","Your Server Name",FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Sets the Server Name text under Clock")
     CreateConVar("StormFoxHudServerNameEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables Server Name text under Clock")
     CreateConVar("StormFoxHudWeatherEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables Weather text under Clock")
     CreateConVar("StormFoxHudTempEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables Temp text under Clock")
+    CreateConVar("StormFoxHudDarkRPBalEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables DarkRP Balance under Clock")
+    CreateConVar("StormFoxHudDarkRPJobEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables DarkRP Job under Clock")
+    CreateConVar("StormFoxHudDarkRPSalaryEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables DarkRP Salary under Clock")
 end
 
 if CLIENT then
-    CreateConVar("StormFoxHudServerName","My Server Name",FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Sets the Server Name text under Clock")
+    CreateConVar("StormFoxHudServerName","Your Server Name",FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Sets the Server Name text under Clock")
     CreateConVar("StormFoxHudServerNameEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables Server Name text under Clock")
     CreateConVar("StormFoxHudWeatherEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables Weather text under Clock")
     CreateConVar("StormFoxHudTempEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables Temp text under Clock")
-    CreateClientConVar("StormFoxHudTempFEnabled",0,FCVAR_ARCHIVE, "Enables Fahrenheit Measurements for Temp")
+    CreateConVar("StormFoxHudDarkRPBalEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables DarkRP Balance under Clock")
+    CreateConVar("StormFoxHudDarkRPJobEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables DarkRP Job under Clock")
+    CreateConVar("StormFoxHudDarkRPSalaryEnabled",1,FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE,"Enables/Disables DarkRP Salary under Clock")
     surface.CreateFont( "StormFoxTime75" , { font = "Trebuchet24", size = 75, weight = 500 })
     surface.CreateFont( "StormFoxTime40" , { font = "Trebuchet24", size = 40, weight = 100 })
     surface.CreateFont( "StormFoxTime40o" , { font = "Trebuchet24", size = 40, weight = 100, outline = true })
@@ -31,7 +36,7 @@ if CLIENT then
         if GetConVar("StormFoxHudServerNameEnabled"):GetInt() == 1 then
             info = info .. GetConVar("StormFoxHudServerName"):GetString() .. "\n"
         end       
-
+		
         if GetConVar("StormFoxHudWeatherEnabled"):GetInt() == 1 then
             if StormFox2 then
                 info = info .. "Weather: " .. StormFox2.Weather.GetDescription() .. "\n"
@@ -40,28 +45,42 @@ if CLIENT then
             end
         end
 
-        if GetConVar("StormFoxHUDTempEnabled"):GetInt() == 1 then
+        if GetConVar("StormFoxHudTempEnabled"):GetInt() == 1 then
             if StormFox2 then
-                local celsiusTemp = StormFox2.Temperature.Get()
-                local displayTemp = celsiusTemp
-                local tempUnit = "°C"
-                if GetConVar("StormFoxHUDTempFEnable"):GetInt() == 1 then
-                    displayTemp = (celsiusTemp * 1.8) + 32
-                    tempUnit = "°F"
-                end
-                info = info .. "Temp: " .. math.Round(displayTemp) .. tempUnit .. " \n"
+                info = info .. "Temp: " .. math.Round(StormFox2.Temperature.Get()) .. "°C \n"
             elseif StormFox then
-                local celsiusTemp = StormFox.GetTemperature()
-                local displayTemp = celsiusTemp
-                local tempUnit = "°C"
-                if GetConVar("StormFoxHUDTempFEnable"):GetInt() == 1 then
-                    displayTemp = (celsiusTemp * 1.8) + 32
-                    tempUnit = "°F"
-                end
-                info = info .. "Temp: " .. math.Round(displayTemp) .. tempUnit .. " \n"
+                info = info .. "Temp: " .. math.Round(StormFox.GetTemperature()) .. "°C \n"
+            end
+        end
+        
+        if GetConVar("StormFoxHudDarkRPJobEnabled"):GetInt() == 1 then
+            if DarkRP == nil then
+            else
+                local jobvalue = LocalPlayer():getDarkRPVar("job")
+                local job = "Job: " .. jobvalue .. "\n"
+                info = info .. job
             end
         end
 
+        
+        if GetConVar("StormFoxHudDarkRPSalaryEnabled"):GetInt() == 1 then
+            if DarkRP == nil then
+            else
+                local salaryvalue = (DarkRP.formatMoney(LocalPlayer():getDarkRPVar("salary")))
+                local salary = "Salary: " .. salaryvalue .. "\n"
+                info = info .. salary
+            end
+        end
+
+        if GetConVar("StormFoxHudDarkRPBalEnabled"):GetInt() == 1 then
+        		if DarkRP == nil then
+                else
+					local walletvalue = (DarkRP.formatMoney(LocalPlayer():getDarkRPVar("money")))
+        			local money = "Balance: " .. walletvalue .. "\n"
+                	info = info .. money
+                end
+        end
+        
         if info == "" then
             return 
         else
