@@ -53,32 +53,34 @@ if CLIENT then
             end
         end
         
-        if GetConVar("StormFoxHudDarkRPJobEnabled"):GetInt() == 1 then
-            if DarkRP == nil then
-            else
-                local jobvalue = LocalPlayer():getDarkRPVar("job")
-                local job = "Job: " .. jobvalue .. "\n"
-                info = info .. job
-            end
-        end
-
-        
-        if GetConVar("StormFoxHudDarkRPSalaryEnabled"):GetInt() == 1 then
-            if DarkRP == nil then
-            else
-                local salaryvalue = (DarkRP.formatMoney(LocalPlayer():getDarkRPVar("salary")))
-                local salary = "Salary: " .. salaryvalue .. "\n"
-                info = info .. salary
-            end
-        end
-
-        if GetConVar("StormFoxHudDarkRPBalEnabled"):GetInt() == 1 then
-        		if DarkRP == nil then
-                else
-					local walletvalue = (DarkRP.formatMoney(LocalPlayer():getDarkRPVar("money")))
-        			local money = "Balance: " .. walletvalue .. "\n"
-                	info = info .. money
+        -- DarkRP specific info
+        if engine.ActiveGamemode() == "darkrp" then
+            if GetConVar("StormFoxHudDarkRPJobEnabled"):GetInt() == 1 then
+                if DarkRP then
+                    local jobvalue = LocalPlayer():getDarkRPVar("job")
+                    if jobvalue then
+                        info = info .. "Job: " .. jobvalue .. "\n"
+                    end
                 end
+            end
+
+            if GetConVar("StormFoxHudDarkRPSalaryEnabled"):GetInt() == 1 then
+                if DarkRP then
+                    local salaryvalue = DarkRP.formatMoney(LocalPlayer():getDarkRPVar("salary"))
+                    if salaryvalue then
+                        info = info .. "Salary: " .. salaryvalue .. "\n"
+                    end
+                end
+            end
+
+            if GetConVar("StormFoxHudDarkRPBalEnabled"):GetInt() == 1 then
+                if DarkRP then
+                    local walletvalue = DarkRP.formatMoney(LocalPlayer():getDarkRPVar("money"))
+                    if walletvalue then
+                        info = info .. "Balance: " .. walletvalue .. "\n"
+                    end
+                end
+            end
         end
         
         if info == "" then
