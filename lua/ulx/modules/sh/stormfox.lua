@@ -1,112 +1,101 @@
 local CATEGORY_NAME = "StormFox"
 
+-- Helper functions
+local function isStormFox2() return StormFox2 and StormFox2.Weather end
+local function isStormFox1() return StormFox and not StormFox2 end
+local function checkStormFox(ply)
+    if not (isStormFox2() or isStormFox1()) then
+        ply:ChatPrint("Error: StormFox or StormFox 2 is not installed!")
+        return false
+    end
+    return true
+end
+
+-- Initialize weather names based on version
 ulx.weather_names = {}
 function StormFoxVersion()
-
-	if StormFox2 and StormFox2.Weather then
-		ulx.weather_names = 
-		{
-		    "Clear",
-		    "Cloud",
-			"Rain",
-		    "Radioactive",
-		    "Fog",
-		    "Lava",
-  		  	"Sandstorm",
-    	}
-	elseif StormFox then
-		ulx.weather_names =
-		{
-			"clear",
-			"cloudy",
-			"fog",
-			"lava",
-			"radioactive",
-			"rain",
-			"sandstorm"
-		}
-	else return	end
+    if isStormFox2() then
+        ulx.weather_names = {
+            "Clear", "Cloud", "Rain", "Radioactive",
+            "Fog", "Lava", "Sandstorm"
+        }
+    elseif isStormFox1() then
+        ulx.weather_names = {
+            "clear", "cloudy", "fog", "lava",
+            "radioactive", "rain", "sandstorm"
+        }
+    end
 end
 StormFoxVersion()
 
 function ulx.settime(calling_ply, time)
-	time = string.Trim(time)
-	local oldTime = time
-	time = string.lower(time)
+    if not checkStormFox(calling_ply) then return end
+    
+    time = string.Trim(time)
+    local oldTime = time
+    time = string.lower(time)
 
-	if StormFox2 and StormFox2.Time then
-		StormFox2.Time.Set(time)
-	elseif StormFox then
-		StormFox.SetTime(time)
-	else
-		calling_ply:ChatPrint("StormFox or StormFox 2 is missing!")
-	end
-
-	if StormFox2 or StormFox then
-		ulx.fancyLogAdmin( calling_ply, "#A set time to #s", oldTime)
-	end
+    if isStormFox2() then
+        StormFox2.Time.Set(time)
+    else
+        StormFox.SetTime(time)
+    end
+    
+    ulx.fancyLogAdmin(calling_ply, "#A set time to #s", oldTime)
 end
 
-function ulx.setweather(calling_ply,weather,percentage)
-	if StormFox2 and StormFox2.Weather then
-		wpercentage = percentage / 100
-		StormFox2.Weather.Set(weather, wpercentage)
-	elseif StormFox then
-		wpercentage = percentage / 100
-		StormFox.SetWeather(weather, wpercentage)
-	else
-		calling_ply:ChatPrint("StormFox or StormFox 2 is missing!")
-	end
-
-	if StormFox2 or StormFox then
-		ulx.fancyLogAdmin( calling_ply, "#A set weather to #s", weather)
-	end
+function ulx.setweather(calling_ply, weather, percentage)
+    if not checkStormFox(calling_ply) then return end
+    
+    local wpercentage = math.Clamp(percentage / 100, 0, 1)
+    
+    if isStormFox2() then
+        StormFox2.Weather.Set(weather, wpercentage)
+    else
+        StormFox.SetWeather(weather, wpercentage)
+    end
+    
+    ulx.fancyLogAdmin(calling_ply, "#A set weather to #s at #i%", weather, percentage)
 end
 
-function ulx.settemp(calling_ply,temp)
-	if StormFox2 and StormFox2.Temperature then
-		StormFox2.Temperature.Set(temp)
-	elseif StormFox then
-		-- Implement farenheight later. For the time being - Celsius baby.
-		StormFox.SetTemperature(temp,false)
-	else
-		calling_ply:ChatPrint("StormFox or StormFox2 is missing!")
-	end
-
-	if StormFox2 or StormFox then
-		ulx.fancyLogAdmin( calling_ply, "#A set temp to #s", temp)
-	end
+function ulx.settemp(calling_ply, temp)
+    if not checkStormFox(calling_ply) then return end
+    
+    if isStormFox2() then
+        StormFox2.Temperature.Set(temp)
+    else
+        StormFox.SetTemperature(temp, false)
+    end
+    
+    ulx.fancyLogAdmin(calling_ply, "#A set temperature to #i°C", temp)
 end
 
-function ulx.setwind(calling_ply,WindSpeed)
-	if StormFox2 and StormFox2.Wind then
-		StormFox2.Wind.SetForce(WindSpeed)
-	elseif StormFox then
-		StormFox.SetNetworkData("Wind", WindSpeed)
-	else
-		calling_ply:ChatPrint("StormFox or StormFox 2 is missing!")
-	end
-
-	if StormFox2 or StormFox then
-		ulx.fancyLogAdmin( calling_ply, "#A set wind speed to #s", WindSpeed)
-	end
+function ulx.setwind(calling_ply, WindSpeed)
+    if not checkStormFox(calling_ply) then return end
+    
+    if isStormFox2() then
+        StormFox2.Wind.SetForce(WindSpeed)
+    else
+        StormFox.SetNetworkData("Wind", WindSpeed)
+    end
+    
+    ulx.fancyLogAdmin(calling_ply, "#A set wind speed to #i", WindSpeed)
 end
 
 function ulx.currentweather(calling_ply)
-	if StormFox2 and StormFox2.Weather then
-		calling_ply:ChatPrint(StormFox2.Weather.GetCurrent().Name)
-		calling_ply:ChatPrint(StormFox2.Weather.GetPercent())
-		calling_ply:ChatPrint(StormFox2.Wind.GetForce())
-	elseif StormFox then
-		calling_ply:ChatPrint(StormFox.GetWeatherID())
-		calling_ply:ChatPrint(StormFox.GetNetworkData("WeatherMagnitude"))
-		calling_ply:ChatPrint(StormFox.GetNetworkData("Wind"))
-		calling_ply:ChatPrint(StormFox.GetBeaufort())
-		calling_ply:ChatPrint(StormFox.GetTemperature())
-	else
-		calling_ply:ChatPrint("StormFox or StormFox 2 is missing!")
-	end
-
+    if not checkStormFox(calling_ply) then return end
+    
+    if isStormFox2() then
+        calling_ply:ChatPrint("Weather: " .. StormFox2.Weather.GetCurrent().Name)
+        calling_ply:ChatPrint("Intensity: " .. math.Round(StormFox2.Weather.GetPercent() * 100) .. "%")
+        calling_ply:ChatPrint("Wind Speed: " .. StormFox2.Wind.GetForce())
+    else
+        calling_ply:ChatPrint("Weather: " .. StormFox.GetWeatherID())
+        calling_ply:ChatPrint("Intensity: " .. math.Round(StormFox.GetNetworkData("WeatherMagnitude") * 100) .. "%")
+        calling_ply:ChatPrint("Wind Speed: " .. StormFox.GetNetworkData("Wind"))
+        calling_ply:ChatPrint("Beaufort Scale: " .. StormFox.GetBeaufort())
+        calling_ply:ChatPrint("Temperature: " .. StormFox.GetTemperature() .. "°C")
+    end
 end
 
 local setweather = ulx.command("StormFox", "ulx setweather", ulx.setweather, "!setweather")
